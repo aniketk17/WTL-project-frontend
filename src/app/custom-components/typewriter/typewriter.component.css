@@ -1,0 +1,11 @@
+.cursor {
+    color: #007bff;
+    font-weight: bold;
+    animation: blink 0.8s infinite;
+  }
+  
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }

@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="fiter-serach">
+        <i class="fa-solid fa-filter" (click)="onClick()" style="cursor: pointer; font-size: 1.2rem; margin-top: 7px;"></i>
+    </div>
+    <div class="filter-container" *ngIf="toggle">
+        <div *ngFor="let chip of chips; let i = index" 
+             class="chip" 
+             [ngClass]="{ 'selected': selectedChips.includes(i) }" 
+             (click)="toggleChip(i)">
+            {{ chip }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+.search-bar{
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.search-container{
+    position: relative;
+}
+
+
+
