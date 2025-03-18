@@ -1,66 +1,106 @@
 <div class="main-container">
     <div class="left-container">
         <div class="brief-info">
-            <img src="profile_pic.jpg" alt="" class="profile-image" style="margin: 0;">
-            <h3 style="margin: 0;">Aniket Kardile</h3>
-            <p style="margin: 0;">Software Developer</p>
-            <p style="margin: 0;">Bay Area, San Fransico, CA</p>
+            <img src="profile_pic.jpg" alt="Profile Image" class="profile-image">
+            <h3>{{ user.name }}</h3>
+            <p>{{ user.role }}</p>
+            <p>{{ user.location }}</p>
             <div class="button-group">
-                <button class="btn btn-primary me-2" style="font-size: 0.8rem;">Follow</button>
-                <button class="btn btn-outline-success" style="font-size: 0.8rem;">Message</button>
+                <button class="btn btn-primary" (click)="toggleFollow()">
+                    {{ isFollowing ? 'Unfollow' : 'Follow' }}
+                </button>
+                <button class="btn btn-outline-success" (click)="openMessageBox()">
+                    Message
+                </button>
             </div>
         </div>
     </div>
+
     <div class="right-side">
         <div class="right-container">
             <div class="info-row">
                 <p class="label-p">Full Name</p>
-                <p>Aniket Kardile</p>
+                <p *ngIf="!isEditing">{{ user.name }}</p>
+                <input *ngIf="isEditing" [(ngModel)]="user.name" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">Email</p>
-                <p>kardileaniket706.com</p>
+                <p *ngIf="!isEditing">{{ user.email }}</p>
+                <input *ngIf="isEditing" [(ngModel)]="user.email" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">Phone</p>
-                <p>9960350851</p>
+                <p *ngIf="!isEditing">{{ user.phone }}</p>
+                <input *ngIf="isEditing" [(ngModel)]="user.phone" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">College</p>
-                <p>Pune Institute of Computer Technology</p>
+                <p *ngIf="!isEditing">{{ user.college }}</p>
+                <input *ngIf="isEditing" [(ngModel)]="user.college" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">Address</p>
-                <p>Bay Area, San Francisco, CA</p>
+                <p *ngIf="!isEditing">{{ user.location }}</p>
+                <input *ngIf="isEditing" [(ngModel)]="user.location" class="form-control" />
             </div>
-            <div>
-                <button class="btn btn-outline-primary edit-button">Edit</button>
+            <div class="edit-buttons">
+                <button class="btn btn-outline-primary" (click)="toggleEdit()">
+                    {{ isEditing ? 'Cancel' : 'Edit' }}
+                </button>
+                <button *ngIf="isEditing" class="btn btn-success" (click)="saveChanges()">Save</button>
             </div>
         </div>
+
         <div class="performance-container">
             <h3>User Performance Overview</h3>
             <div class="performance-metrics">
                 <div class="metric-card">
                     <h4>Quizzes Taken</h4>
-                    <p>25</p>
+                    <p>{{ performance.quizzesTaken }}</p>
                 </div>
                 <div class="metric-card">
                     <h4>Accuracy</h4>
-                    <p>85%</p>
+                    <p>{{ performance.accuracy }}</p>
                 </div>
                 <div class="metric-card">
                     <h4>Average Score</h4>
-                    <p>78%</p>
+                    <p>{{ performance.averageScore }}</p>
                 </div>
                 <div class="metric-card">
                     <h4>Highest Score</h4>
-                    <p>95%</p>
+                    <p>{{ performance.highestScore }}</p>
                 </div>
                 <div class="metric-card">
                     <h4>Fastest Completion</h4>
-                    <p>12 mins</p>
+                    <p>{{ performance.fastestCompletion }}</p>
                 </div>
             </div>
+        </div>
+
+        <div class="leaderboard-container">
+            <h3>Leaderboard</h3>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of leaderboard">
+                        <td>{{ user.rank }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Message Box -->
+        <div *ngIf="showMessageBox" class="message-box">
+            <textarea [(ngModel)]="messageText" placeholder="Type your message..." class="form-control"></textarea>
+            <button class="btn btn-primary" (click)="sendMessage()">Send</button>
         </div>
     </div>
 </div>

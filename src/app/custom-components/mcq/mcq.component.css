@@ -1,56 +1,131 @@
+/* Main container styling */
 .mcq-container {
-    padding: 15px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    margin: 1.5rem auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px;
+    margin: 2rem auto;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid #87CEEB;
 }
 
-.mcq-content {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
+/* Question title */
+h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
-.question {
-    flex: 1;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 16px;
-    max-width: 60%;
-    text-align: left;
+/* Question text */
+p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.options {
-    flex: 1;
-    max-width: 40%;
-}
-
-.option-list {
-    list-style-type: none;
+/* Options container */
+ul {
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.option-list li {
+li {
+    padding: 12px 16px;
+    border: 2px solid #87CEEB;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 18px;
+    background: #f0faff;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
+}
+
+/* Hover effect */
+li:hover {
+    background-color: #87CEEB;
+    color: white;
+    border-color: #007bff;
+    transform: scale(1.02);
+}
+
+/* Selected option effect */
+input[type="radio"]:checked + label {
+    color: white;
+    font-weight: bold;
+}
+
+/* Radio button custom styling */
+input[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    position: relative;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 18px;
 }
 
-.option-list li:hover {
-    background-color: #e0f7fa;
+input[type="radio"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
-input[type="radio"] {
-    transform: scale(1.2);
+input[type="radio"]:checked::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: white;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    border-radius: 50%;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.prev-btn {
+    background: #007bff;
+    color: white;
+}
+
+.next-btn {
+    background: #87CEEB;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
 }

@@ -18,6 +18,7 @@ import { ProfileComponent } from './custom-components/profile/profile.component'
 import { QuizComponent } from './custom-components/quiz/quiz.component';
 import { McqComponent } from './custom-components/mcq/mcq.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   standalone: false,
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
   signUp: boolean = true;
@@ -38,15 +40,36 @@ export class HomeComponent {
   paginatedCategories: any = [];
   pageSize: number = 6;
   currentPage: number = 0;
+  searchQuery: string = '';
+  selectedFilter: string = 'all';
+  isDarkMode: boolean = false;
+  constructor(private router: Router) {} 
 
   ngOnInit() {
     this.updatePaginatedCategories();
+    this.addScrollAnimation();
   }
 
   updatePaginatedCategories() {
+    let filteredCategories = this.allCategories;
+
+    // Filter by search query
+    if (this.searchQuery) {
+      filteredCategories = filteredCategories.filter(category =>
+        category.title.toLowerCase().includes(this.searchQuery)
+      );
+    }
+
+    // Filter by selected filter
+    if (this.selectedFilter !== 'all') {
+      filteredCategories = filteredCategories.filter(category =>
+        category.title === this.selectedFilter
+      );
+    }
+
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.paginatedCategories = this.allCategories.slice(startIndex,endIndex);
+    this.paginatedCategories = filteredCategories.slice(startIndex, endIndex);
   }
 
   onPageChange(event: PageEvent) {
@@ -54,5 +77,45 @@ export class HomeComponent {
     this.pageSize = event.pageSize;
     this.updatePaginatedCategories();
   }
+
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchQuery = input.value.toLowerCase();
+    this.updatePaginatedCategories();
+  }
+
+  onFilterChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.selectedFilter = select.value;
+    this.updatePaginatedCategories();
+  }
+
+  getProgress(category: any): number {
+
+    return Math.floor(Math.random() * 100);
+  }
+
+  getTimeLeft(category: any): string {
   
+    const minutes = Math.floor(Math.random() * 60);
+    const seconds = Math.floor(Math.random() * 60);
+    return `${minutes}m ${seconds}s`;
+  }
+
+
+  addScrollAnimation() {
+    const getStartedBtn = document.getElementById('get-started-btn');
+    if (getStartedBtn) {
+      getStartedBtn.addEventListener('click', () => {
+        const quizSection = document.getElementById('quiz-section');
+        if (quizSection) {
+          quizSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  }
+
+  startQuiz(category: any) {
+    this.router.navigate(['/quiz'], { queryParams: { category: category.title } });
+  }
 }
