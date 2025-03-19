@@ -21,27 +21,22 @@
             <div class="info-row">
                 <p class="label-p">Full Name</p>
                 <p *ngIf="!isEditing">{{ user.name }}</p>
-                <input *ngIf="isEditing" [(ngModel)]="user.name" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">Email</p>
                 <p *ngIf="!isEditing">{{ user.email }}</p>
-                <input *ngIf="isEditing" [(ngModel)]="user.email" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">Phone</p>
                 <p *ngIf="!isEditing">{{ user.phone }}</p>
-                <input *ngIf="isEditing" [(ngModel)]="user.phone" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">College</p>
                 <p *ngIf="!isEditing">{{ user.college }}</p>
-                <input *ngIf="isEditing" [(ngModel)]="user.college" class="form-control" />
             </div>
             <div class="info-row">
                 <p class="label-p">Address</p>
                 <p *ngIf="!isEditing">{{ user.location }}</p>
-                <input *ngIf="isEditing" [(ngModel)]="user.location" class="form-control" />
             </div>
             <div class="edit-buttons">
                 <button class="btn btn-outline-primary" (click)="toggleEdit()">
@@ -95,12 +90,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        <!-- Message Box -->
-        <div *ngIf="showMessageBox" class="message-box">
-            <textarea [(ngModel)]="messageText" placeholder="Type your message..." class="form-control"></textarea>
-            <button class="btn btn-primary" (click)="sendMessage()">Send</button>
         </div>
     </div>
 </div>
