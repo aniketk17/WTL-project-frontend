@@ -1,3 +1,18 @@
+<div class="quiz-tracker-container">
+  <div class="question-tracker" #tracker>
+    <div
+      class="question-tracker-item"
+      *ngFor="let question of questions; let i = index"
+      [class.active]="i === currentQuestionIndex"
+      [class.attempted]="isAttempted(i)"
+      (click)="goToQuestion(i)"
+    >
+      {{ i + 1 }}
+      <div class="tracker-line" *ngIf="i < questions.length - 1"></div>
+    </div>
+  </div>
+</div>
+
 <div class="quiz-container">
   <div class="timer-container">
     <span id="timer">Time Left: {{ timeLeft }}</span>
@@ -21,7 +36,7 @@
       Previous
     </button>
     <button class="next-btn" *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">
-      Next
+      Save&Next
     </button>
     <button class="submit-btn" *ngIf="currentQuestionIndex === questions.length - 1" (click)="submitQuiz()">
       Submit

@@ -1,5 +1,67 @@
-/* Main Quiz Container */
-.quiz-container {
+/* Question Tracker Container */
+.quiz-tracker-container {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 300px; /* Adjust height as needed */
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 2px solid #0077b6;
+    padding-right: 10px;
+  }
+  
+  .question-tracker {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+  }
+  
+  .question-tracker-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e0f7fa;
+    color: #0077b6;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+  
+  .question-tracker-item.active {
+    background-color: #00b4d8;
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  .question-tracker-item.attempted {
+    background-color: #4caf50; /* Green color for attempted questions */
+    color: white;
+  }
+  
+  .question-tracker-item:hover {
+    background-color: #caf0f8;
+  }
+  
+  .tracker-line {
+    position: absolute;
+    width: 2px;
+    background-color: #0077b6;
+    top: 20px;
+    left: 50%;
+    height: calc(100% - 40px); /* Adjust height to connect to the next item */
+    transform: translateX(-50%);
+  }
+  
+  /* Main Quiz Container */
+  .quiz-container {
     width: 90%;
     max-width: 900px;
     margin: 4rem auto;
@@ -10,10 +72,10 @@
     transition: all 0.4s ease-in-out;
     text-align: center;
     border: 4px solid #00b4d8;
-}
-
-/* Timer Styling */
-.timer-container {
+  }
+  
+  /* Timer Styling */
+  .timer-container {
     background: linear-gradient(135deg, #00b4d8, #0077b6);
     color: white;
     padding: 18px;
@@ -23,34 +85,34 @@
     text-align: center;
     margin-bottom: 25px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* MCQ Container */
-.mcq-container {
+  }
+  
+  /* MCQ Container */
+  .mcq-container {
     padding: 30px;
     background: #e0f7fa;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     font-size: 22px;
-}
-
-/* Question Text */
-.question-text {
+  }
+  
+  /* Question Text */
+  .question-text {
     font-size: 26px;
     margin-bottom: 30px;
     color: #333;
     font-weight: 600;
     animation: fadeIn 1s ease-in-out;
-}
-
-/* Options Styling */
-.options-container {
+  }
+  
+  /* Options Styling */
+  .options-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-.option-item {
+  }
+  
+  .option-item {
     display: flex;
     align-items: center;
     padding: 15px;
@@ -59,39 +121,39 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.3s, background-color 0.3s;
-}
-
-.option-item:hover {
+  }
+  
+  .option-item:hover {
     transform: scale(1.02);
     background-color: #caf0f8;
-}
-
-.option-number {
+  }
+  
+  .option-number {
     font-size: 20px;
     font-weight: bold;
     color: #0077b6;
     margin-right: 10px;
-}
-
-.option-text {
+  }
+  
+  .option-text {
     font-size: 20px;
     color: #333;
-}
-
-input[type="radio"] {
+  }
+  
+  input[type="radio"] {
     margin-right: 15px;
     transform: scale(1.3);
     cursor: pointer;
-}
-
-/* Navigation Buttons */
-.nav-buttons {
+  }
+  
+  /* Navigation Buttons */
+  .nav-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
-}
-
-button {
+  }
+  
+  button {
     padding: 18px 28px;
     font-size: 20px;
     font-weight: bold;
@@ -99,54 +161,54 @@ button {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.4s;
-}
-
-/* Previous and Next Button Styles */
-.prev-btn {
+  }
+  
+  /* Previous and Next Button Styles */
+  .prev-btn {
     background: #00b4d8;
     color: white;
-}
-
-.next-btn {
+  }
+  
+  .next-btn {
     background: #0077b6;
     color: white;
-}
-
-/* Submit Button */
-.submit-btn {
+  }
+  
+  /* Submit Button */
+  .submit-btn {
     background: #005f5f;
     color: white;
-}
-
-/* Button Hover Effect */
-button:hover {
+  }
+  
+  /* Button Hover Effect */
+  button:hover {
     opacity: 0.9;
     transform: scale(1.05);
-}
-
-button:disabled {
+  }
+  
+  button:disabled {
     background: #ccc;
     cursor: not-allowed;
     transform: none;
-}
-
-/* AI Section */
-.ai-section {
+  }
+  
+  /* AI Section */
+  .ai-section {
     margin-top: 40px;
     padding: 30px;
     background: #e0f7fa;
     border-radius: 15px;
-}
-
-.ask-ai-btn {
+  }
+  
+  .ask-ai-btn {
     background: #00b4d8;
     color: white;
     font-size: 20px;
     padding: 18px 28px;
     border-radius: 10px;
-}
-
-.ai-explanation {
+  }
+  
+  .ai-explanation {
     margin-top: 20px;
     font-size: 20px;
     color: #333;
@@ -154,39 +216,40 @@ button:disabled {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Quiz Completed Section */
-.quiz-end-container {
+  }
+  
+  /* Quiz Completed Section */
+  .quiz-end-container {
     padding: 35px;
     text-align: center;
-}
-
-.quiz-end-container h1 {
+  }
+  
+  .quiz-end-container h1 {
     color: #005f5f;
     font-size: 32px;
-}
-
-.score {
+  }
+  
+  .score {
     font-size: 26px;
     font-weight: bold;
     margin-top: 20px;
     color: #333;
-}
-
-.retry-btn {
+  }
+  
+  .retry-btn {
     background: #ff6b6b;
     color: white;
     font-size: 20px;
     padding: 18px 28px;
-}
-
-/* Animation */
-@keyframes fadeIn {
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
     from {
-        opacity: 0;
+      opacity: 0;
     }
     to {
-        opacity: 1;
+      opacity: 1;
     }
-}
+  }
+  
