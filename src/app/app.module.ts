@@ -18,7 +18,6 @@ import { ProfileComponent } from './custom-components/profile/profile.component'
 import { QuizComponent } from './custom-components/quiz/quiz.component';
 import { McqComponent } from './custom-components/mcq/mcq.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RegisterModalComponent } from './custom-components/register-modal/register-modal.component';
 
 
 @NgModule({
@@ -35,7 +34,6 @@ import { RegisterModalComponent } from './custom-components/register-modal/regis
     ProfileComponent,
     QuizComponent,
     McqComponent,
-    RegisterModalComponent
   ],
   imports: [
     BrowserModule,

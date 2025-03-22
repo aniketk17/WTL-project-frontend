@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { RegisterModalComponent } from '../register-modal/register-modal.component';
 
 @Component({
   selector: 'app-navbar',

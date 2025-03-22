@@ -62,4 +62,3 @@ export class RegisterComponent implements OnInit {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 }
-
