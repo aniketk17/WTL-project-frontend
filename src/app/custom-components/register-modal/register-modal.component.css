@@ -1,38 +1,42 @@
-
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+/* registration-dialog.component.scss */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-* {
+*{
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  height: 100vh;
-  position: sticky;
-  margin: 0;
+.dialog-container {
   max-width: 100%;
-  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  z-index: 1000;
 }
 
-
-.register-container {
+.register-dialog {
+  position: relative;
   max-width: 400px;
   width: 100%;
-  height: fit-content;
   padding: 30px;
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-  z-index: 1000;
-  margin-bottom: 45px;
 }
 
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: #0077b6;
+  }
+}
+
+/* Heading */
 h2 {
   text-align: center;
   margin-bottom: 20px;
@@ -44,13 +48,13 @@ h2 {
 /* Form Group */
 .form-group {
   margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #555;
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+  }
 }
 
 /* Input Wrapper */
@@ -58,19 +62,19 @@ h2 {
   position: relative;
   display: flex;
   align-items: center;
-}
-
-.input-wrapper i {
-  position: absolute;
-  left: 12px;
-  color: #00b4d8;
-}
-
-.input-wrapper .toggle-password {
-  position: absolute;
-  right: 12px;
-  cursor: pointer;
-  color: #00b4d8;
+  
+  fa-icon {
+    position: absolute;
+    left: 12px;
+    color: #00b4d8;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #00b4d8;
+  }
 }
 
 /* Input Fields */
@@ -83,14 +87,12 @@ input[type="email"] {
   border-radius: 8px;
   font-size: 16px;
   transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus {
-  border-color: #00b4d8;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.2);
+  
+  &:focus {
+    border-color: #00b4d8;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.2);
+  }
 }
 
 /* Error Message */
@@ -112,19 +114,19 @@ input[type="email"]:focus {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.button:hover {
-  background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
-}
-
-.button:disabled {
-  background: linear-gradient(135deg, #ccc, #999);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  
+  &:hover {
+    background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  }
+  
+  &:disabled {
+    background: linear-gradient(135deg, #ccc, #999);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 /* Divider */
@@ -133,19 +135,19 @@ input[type="email"]:focus {
   align-items: center;
   text-align: center;
   margin: 20px 0;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  border-bottom: 1px solid #ddd;
-}
-
-.divider span {
-  padding: 0 10px;
-  color: #777;
-  font-size: 14px;
+  
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  span {
+    padding: 0 10px;
+    color: #777;
+    font-size: 14px;
+  }
 }
 
 /* Google Button */
@@ -163,11 +165,11 @@ input[type="email"]:focus {
   border: 1px solid #ddd;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.google-button:hover {
-  background-color: #f8f9fa;
-  border-color: #00b4d8;
+  
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #00b4d8;
+  }
 }
 
 .google-icon {
@@ -182,25 +184,25 @@ input[type="email"]:focus {
   font-size: 14px;
   margin-top: 20px;
   color: #555;
-}
-
-.login-link a {
-  color: #00b4d8;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.login-link a:hover {
-  text-decoration: underline;
+  
+  a {
+    color: #00b4d8;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 /* Responsive Styles */
 @media (max-width: 480px) {
-  .register-container {
+  .register-dialog {
     padding: 20px;
-    max-width: 90%; /* Allow the form to take more width on small screens */
   }
-
+  
   h2 {
     font-size: 1.5rem;
   }

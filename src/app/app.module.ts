@@ -17,6 +17,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProfileComponent } from './custom-components/profile/profile.component';
 import { QuizComponent } from './custom-components/quiz/quiz.component';
 import { McqComponent } from './custom-components/mcq/mcq.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RegisterModalComponent } from './custom-components/register-modal/register-modal.component';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { McqComponent } from './custom-components/mcq/mcq.component';
     SearchbarComponent,
     ProfileComponent,
     QuizComponent,
-    McqComponent
+    McqComponent,
+    RegisterModalComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { McqComponent } from './custom-components/mcq/mcq.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

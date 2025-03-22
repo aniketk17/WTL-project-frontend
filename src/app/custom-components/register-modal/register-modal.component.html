@@ -1,15 +1,22 @@
-<div class="container" style="background: (135deg, #00b4d8, #0077b6);">
-    <div class="register-container">
+<!-- registration-dialog.component.html -->
+<div class="dialog-container">
+    <div class="register-dialog">
+      <button class="close-button" (click)="closeDialog()">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+      
       <h2>Register</h2>
+      
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <!-- Username Field -->
         <div class="form-group">
           <label for="username">Username</label>
           <div class="input-wrapper">
-            <fa-icon [icon]="faUser" style="position: absolute; top: 12px; left: 10px;"></fa-icon>
+            <fa-icon [icon]="faUser"></fa-icon>
             <input type="text" id="username" formControlName="username" placeholder="Enter username">
           </div>
-          <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.hasError('required')" class="error-message">
+          <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.hasError('required')" 
+               class="error-message">
             Username is required.
           </div>
         </div>
@@ -18,10 +25,11 @@
         <div class="form-group">
           <label for="email">Email</label>
           <div class="input-wrapper">
-            <fa-icon [icon]="faEnvelope" style="position: absolute; top: 12px; left: 10px;"></fa-icon>
+            <fa-icon [icon]="faEnvelope"></fa-icon>
             <input type="email" id="email" formControlName="email" placeholder="Enter email">
           </div>
-          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')" class="error-message">
+          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')" 
+               class="error-message">
             Please enter a valid email.
           </div>
         </div>
@@ -30,11 +38,14 @@
         <div class="form-group">
           <label for="password">Password</label>
           <div class="input-wrapper">
-            <fa-icon [icon]="faLock" style="position: absolute; top: 12px; left: 10px;"></fa-icon>
-            <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter password">
-            <fa-icon [icon]="isPasswordVisible ? faEyeSlash : faEye" class="toggle-password" (click)="togglePasswordVisibility()"></fa-icon>
+            <fa-icon [icon]="faLock"></fa-icon>
+            <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" formControlName="password" 
+                   placeholder="Enter password">
+            <fa-icon [icon]="isPasswordVisible ? faEyeSlash : faEye" class="toggle-password" 
+                    (click)="togglePasswordVisibility()"></fa-icon>
           </div>
-          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')" class="error-message">
+          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')" 
+               class="error-message">
             Password is required.
           </div>
         </div>
@@ -43,9 +54,11 @@
         <div class="form-group">
           <label for="confirm-password">Confirm Password</label>
           <div class="input-wrapper">
-            <fa-icon [icon]="faLock" style="position: absolute; top: 12px; left: 10px;"></fa-icon>
-            <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" id="confirm-password" formControlName="confirmPassword" placeholder="Confirm password">
-            <fa-icon [icon]="isConfirmPasswordVisible ? faEyeSlash : faEye" class="toggle-password" (click)="toggleConfirmPasswordVisibility()"></fa-icon>
+            <fa-icon [icon]="faLock"></fa-icon>
+            <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" id="confirm-password" 
+                   formControlName="confirmPassword" placeholder="Confirm password">
+            <fa-icon [icon]="isConfirmPasswordVisible ? faEyeSlash : faEye" class="toggle-password" 
+                    (click)="toggleConfirmPasswordVisibility()"></fa-icon>
           </div>
           <div *ngIf="registerForm.hasError('mismatch')" class="error-message">
             Passwords do not match.
@@ -56,7 +69,7 @@
         <button type="submit" [disabled]="registerForm.invalid" class="button">Register</button>
   
         <!-- Login Link -->
-        <p class="login-link">Already have an account? <a routerLink="/login">Login here</a></p>
+        <p class="login-link">Already have an account? <a (click)="loginInstead()">Login here</a></p>
       </form>
   
       <!-- Google Login Button -->
