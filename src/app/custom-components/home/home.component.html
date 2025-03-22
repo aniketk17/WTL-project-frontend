@@ -1,10 +1,9 @@
-<div class="home-container">
+<!-- <div class="home-container">
     <div class="left-content">
         <app-typewriter></app-typewriter>
         <p>Test your knowledge with our exciting quizzes. Challenge yourself and learn new things every day!</p>
         <div class="cta-buttons">
             <button class="button" id="get-started-btn">Get Started</button>
-            <!-- <button class="button secondary">Explore Quizzes</button> -->
         </div>
         <div class="stats">
             <div class="stat-item">
@@ -22,7 +21,6 @@
         </div>
     </div>
     <div class="right-content">
-        <!-- Floating Quiz Icons -->
         <div class="quiz-icons">
             <div class="icon">?</div>
             <div class="icon">✓</div>
@@ -36,40 +34,43 @@
         <span>Scroll Down</span>
         <div class="arrow"></div>
     </div>
-</div>
+</div> -->
 
 <!-- Quiz Templates Section -->
-<div class="home" id="quiz-section">
-    <div class="header">
-        <h2>Explore Quizzes</h2>
-        <p>Choose a topic and start testing your knowledge!</p>
-    </div>
-    <div class="search-filter-custom">
-        <input type="text" placeholder="Search quizzes..." class="search-input" (input)="onSearch($event)">
-        <select class="filter-select" (change)="onFilterChange($event)">
-            <option value="all">All Categories</option>
-            <option *ngFor="let category of allCategories" [value]="category.title">{{ category.title }}</option>
-        </select>
-    </div>
-    <div class="quiz-card-container">
-        <div *ngFor="let category of paginatedCategories" class="quiz-card">
-            <h3>{{ category.title }}</h3>
-            <p>{{ category.info }}</p>
-            <div class="progress-bar">
-                <div class="progress" [style.width]="getProgress(category) + '%'"></div>
-            </div>
-            <button class="button" (click)="startQuiz(category)">Start Quiz</button>
+<div class="scrollable-container">
+    <div class="home" id="quiz-section">
+        <div class="header">
+            <h2>Explore Quizzes</h2>
+            <p>Choose a topic and start testing your knowledge!</p>
         </div>
-        
-    </div>
-    <div class="feedback-section">
-        <h3>We'd Love Your Feedback!</h3>
-        <textarea placeholder="Share your thoughts..." class="feedback-input"></textarea>
-        <button class="button">Submit Feedback</button>
-    </div>
-    <div class="social-sharing">
-        <button class="button social-button">Share on Facebook</button>
-        <button class="button social-button">Share on Twitter</button>
-        <button class="button social-button">Share on LinkedIn</button>
+        <div class="search-filter-custom">
+            <input type="text" placeholder="Search quizzes..." class="search-input" (input)="onSearch($event)">
+            <select class="filter-select" (change)="onFilterChange($event)">
+                <option value="all">All Categories</option>
+                <option *ngFor="let category of allCategories" [value]="category.title">{{ category.title }}</option>
+            </select>
+        </div>
+        <div class="quiz-card-container">
+            <div *ngFor="let category of paginatedCategories" class="quiz-card">
+                <h3>{{ category.title }}</h3>
+                <p>{{ category.info }}</p>
+                <div class="progress-bar">
+                    <div class="progress" [style.width]="getProgress(category) + '%'"></div>
+                </div>
+                <button class="button" (click)="startQuiz(category)">Start Quiz</button>
+            </div>
+        </div>
+        <mat-paginator [length]="allCategories.length" [pageSize]="6" [pageSizeOptions]="[6,12,18]" showFirstLastButtons
+            (page)="onPageChange($event)"></mat-paginator> 
+        <!-- <div class="feedback-section">
+            <h3>We'd Love Your Feedback!</h3>
+            <textarea placeholder="Share your thoughts..." class="feedback-input"></textarea>
+            <button class="button">Submit Feedback</button>
+        </div>
+        <div class="social-sharing">
+            <button class="button social-button">Share on Facebook</button>
+            <button class="button social-button">Share on Twitter</button>
+            <button class="button social-button">Share on LinkedIn</button>
+        </div> -->
     </div>
 </div>

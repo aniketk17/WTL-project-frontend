@@ -35,8 +35,11 @@
     <button class="prev-btn" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
       Previous
     </button>
+    <button class="mark-btn">
+      Mark Answer
+    </button>
     <button class="next-btn" *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">
-      Save&Next
+      Next
     </button>
     <button class="submit-btn" *ngIf="currentQuestionIndex === questions.length - 1" (click)="submitQuiz()">
       Submit
