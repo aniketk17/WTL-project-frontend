@@ -1,0 +1,48 @@
+<div class="container">
+    
+  <!-- Instructions Section -->
+  <div class="instructions">
+      <h2>How to Use</h2>
+      <ul>
+          <li>Drag and drop a PDF file or click to select one.</li>
+          <li>Enter a custom prompt for quiz generation.</li>
+          <li>Click "Generate Quiz" to process the file.</li>
+          <li>Wait for AI to generate questions from the PDF.</li>
+      </ul>
+  </div>
+
+  <!-- Adding Space Between Sections -->
+  <div class="separator"></div>
+
+  <!-- Upload Section -->
+  <div class="main-content">
+      <div class="upload-container">
+          <div class="drop-area" 
+               (dragover)="onDragOver($event)" 
+               (drop)="onDrop($event)">
+              <p *ngIf="!selectedFile">
+                  Drag & Drop your PDF here or <span class="browse">Browse</span>
+              </p>
+              <p *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</p>
+              <input type="file" 
+                     accept="application/pdf" 
+                     (change)="onFileSelect($event)" 
+                     hidden #fileInput>
+          </div>
+          
+          <button class="upload-btn" (click)="fileInput.click()">Select File</button>
+          
+          <textarea class="prompt-input" 
+                    placeholder="Enter your custom prompt..." 
+                    >
+          </textarea>
+          
+          <button class="submit-btn" 
+                  (click)="submit()" 
+                  [disabled]="!selectedFile || !customPrompt">
+              <span *ngIf="!loading">Generate Quiz</span>
+              <span *ngIf="loading" class="spinner"></span>
+          </button>
+      </div>
+  </div>
+</div>

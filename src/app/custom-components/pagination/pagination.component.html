@@ -1,0 +1,85 @@
+<!-- pagination.component.html -->
+<div class="pagination-container">
+    <div class="pagination-left">
+      <span class="items-info">
+        Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ getMinValue(currentPage * pageSize, totalItems) }} of {{ totalItems }} items
+      </span>
+    </div>
+    
+    <div class="pagination-center">
+      <div class="pagination-controls">
+        <button 
+          class="pagination-button" 
+          [disabled]="currentPage === 1" 
+          (click)="goToFirstPage()"
+          [ngClass]="{'disabled': currentPage === 1}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+            <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        
+        <button 
+          class="pagination-button" 
+          [disabled]="currentPage === 1" 
+          (click)="goToPreviousPage()"
+          [ngClass]="{'disabled': currentPage === 1}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        
+        <!-- First page indicator with ellipsis -->
+        <ng-container *ngIf="pages[0] > 1">
+          <button class="pagination-button" (click)="goToPage(1)">1</button>
+          <span *ngIf="pages[0] > 2" class="pagination-ellipsis">...</span>
+        </ng-container>
+        
+        <!-- Page numbers -->
+        <ng-container *ngFor="let page of pages">
+          <button 
+            class="pagination-button" 
+            [ngClass]="{'active': page === currentPage}"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button>
+        </ng-container>
+        
+        <!-- Last page indicator with ellipsis -->
+        <ng-container *ngIf="pages[pages.length - 1] < totalPages">
+          <span *ngIf="pages[pages.length - 1] < totalPages - 1" class="pagination-ellipsis">...</span>
+          <button class="pagination-button" (click)="goToPage(totalPages)">{{ totalPages }}</button>
+        </ng-container>
+        
+        <button 
+          class="pagination-button" 
+          [disabled]="currentPage === totalPages" 
+          (click)="goToNextPage()"
+          [ngClass]="{'disabled': currentPage === totalPages}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+        
+        <button 
+          class="pagination-button" 
+          [disabled]="currentPage === totalPages" 
+          (click)="goToLastPage()"
+          [ngClass]="{'disabled': currentPage === totalPages}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+            <path fill-rule="evenodd" d="M8.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L14.293 8 8.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="pagination-right">
+      <div class="items-per-page">
+        <span>Items per page:</span>
+        <select (change)="changePageSize($event)" [value]="pageSize">
+          <option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+    </div>
+  </div>

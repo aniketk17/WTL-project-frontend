@@ -1,0 +1,29 @@
+/* question-timeline.component.scss */
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  .timeline-container {
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  }

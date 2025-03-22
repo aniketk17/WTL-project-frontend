@@ -1,0 +1,58 @@
+<!-- question-timeline.component.html -->
+<div class="flex flex-col items-center w-full">
+  <!-- Page indicator -->
+  <div *ngIf="totalPages > 1" class="flex items-center justify-between w-full px-2 mb-4">
+    <button 
+      (click)="goToPrevPage()" 
+      [disabled]="currentPage === 1"
+      [ngClass]="{'text-gray-300 cursor-not-allowed': currentPage === 1, 'text-blue-500 hover:bg-blue-100': currentPage > 1}"
+      class="p-1 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <span class="text-sm font-medium text-gray-600">
+      Page {{currentPage}} of {{totalPages}}
+    </span>
+    <button 
+      (click)="goToNextPage()" 
+      [disabled]="currentPage === totalPages"
+      [ngClass]="{'text-gray-300 cursor-not-allowed': currentPage === totalPages, 'text-blue-500 hover:bg-blue-100': currentPage < totalPages}"
+      class="p-1 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Timeline items -->
+  <div class="flex flex-col items-center space-y-4 my-6 w-full overflow-hidden">
+    <div *ngFor="let questionIndex of displayItems; let i = index" class="flex flex-col items-center">
+      <!-- Step indicator circle -->
+      <div 
+        class="w-12 h-12 flex items-center justify-center rounded-full text-lg font-semibold shadow-md transition-all duration-300"
+        [ngClass]="getStepClasses(questionIndex)">
+        {{ questionIndex }}
+      </div>
+      
+      <!-- Vertical Connector -->
+      <div *ngIf="i < displayItems.length - 1" class="relative w-1.5 h-16">
+        <div class="absolute top-0 left-0 w-full h-full bg-gray-200 rounded-full"></div>
+        <div 
+          class="absolute top-0 left-0 w-full transition-all duration-500 rounded-full"
+          [ngClass]="getConnectorClasses(questionIndex)"
+          [style.height.%]="getConnectorWidth(questionIndex)">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Quick navigation buttons at bottom (optional) -->
+  <div *ngIf="totalPages > 1" class="flex justify-center items-center mt-2 space-x-1">
+    <div *ngFor="let page of [].constructor(totalPages); let i = index" 
+         class="w-2 h-2 rounded-full cursor-pointer transition-all duration-300"
+         [ngClass]="{'bg-blue-500': currentPage === i + 1, 'bg-gray-300': currentPage !== i + 1}"
+         (click)="currentPage = i + 1; updateDisplayItems()">
+    </div>
+  </div>
+</div>

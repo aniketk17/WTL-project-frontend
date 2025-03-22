@@ -45,7 +45,7 @@
 
 .button {
     padding: 15px 22px;
-    background-color: #ff6f61;
+    background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);;
     color: white;
     border: none;
     border-radius: 10px;
