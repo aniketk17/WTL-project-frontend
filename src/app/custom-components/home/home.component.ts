@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
   selector: 'app-home',
   standalone: false,
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
   signUp: boolean = true;
@@ -38,16 +39,38 @@ export class HomeComponent {
     { title: 'Current Affairs', info: 'Stay updated with quizzes on recent global events and news.' },
   ];
   paginatedCategories: any = [];
-  pageSize: number = 6;
+  pageSize: number = 12;
   currentPage: number = 0;
   searchQuery: string = '';
   selectedFilter: string = 'all';
   isDarkMode: boolean = false;
-  constructor(private router: Router) {} 
+  isLoggedIn: boolean = false; // Track user's login status
+  showQuizzesSection: boolean = false; // Control visibility of quizzes section
+  @ViewChild('quizSection', { static: false }) quizSection!: ElementRef;
+  constructor(private router: Router, private authService: AuthService) {
+  } 
 
   ngOnInit() {
     this.updatePaginatedCategories();
     this.addScrollAnimation();
+    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  }
+
+  
+  redirectToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+  // Show the quizzes section
+  showQuizzes(): void {
+    this.showQuizzesSection = true;
+
+    // Scroll to the quizzes section after a short delay to allow the DOM to update
+    setTimeout(() => {
+      this.quizSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   }
 
   updatePaginatedCategories() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { ApiService } from '../../api.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit() {
@@ -51,8 +53,25 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Form submitted:', this.loginForm.value);
-      // this.router.navigate(['/dashboard']);
+      const user = {
+        email: this.loginForm.value.username,
+        password: this.loginForm.value.password,
+      };
+      this.apiService.login(user).subscribe(
+        (response: any) => {
+          console.log('Login successful:', response);
+          
+          // Store tokens in localStorage
+          localStorage.setItem('access_token', response.access_token);
+          localStorage.setItem('refresh_token', response.refresh_token);
+  
+          // Navigate to home
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Login error:', error);
+        }
+      );
     } else {
       Object.keys(this.loginForm.controls).forEach(key => {
         this.loginForm.get(key)?.markAsTouched();

@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faUser, faLock, faEye, faEyeSlash, faEnvelope, } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'; // Import Google icon
+import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  standalone: false
+  standalone: false,
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
@@ -22,7 +24,14 @@ export class RegisterComponent implements OnInit {
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  // Message to display to the user
+  message: string = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService, // Inject ApiService
+    private router: Router // Inject Router
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -30,7 +39,7 @@ export class RegisterComponent implements OnInit {
         username: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required]
+        confirmPassword: ['', Validators.required],
       },
       { validator: this.passwordMatchValidator }
     );
@@ -46,9 +55,25 @@ export class RegisterComponent implements OnInit {
   // Form submission handler
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log('Form Submitted!', this.registerForm.value);
+      const user = {
+        username: this.registerForm.value.username,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+      };
+
+      // Call the register method from ApiService
+      this.apiService.register(user).subscribe(
+        (response) => {
+          this.message = 'Registration successful!';
+          this.router.navigate(['/login']); // Redirect to login page
+        },
+        (error) => {
+          this.message = 'Registration failed. Please try again.';
+          console.error('Registration error:', error);
+        }
+      );
     } else {
-      console.log('Form is invalid');
+      this.message = 'Please fill out the form correctly.';
     }
   }
 

@@ -261,17 +261,19 @@
     border-radius: 5px;
     border: 1px solid #ddd;
     width: 300px;
-    background-color: #f9f9f9;
-    color: #333;
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #0096c7, #023e8a);
 }
 
 .filter-select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, #0096c7, #023e8a);
     color: #333;
     cursor: pointer;
+    color: #ffffff;
 }
 
 .quiz-card-container {
@@ -411,4 +413,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+::ng-deep .mat-paginator-container .mat-paginator-page-size {
+    border: none;
+    box-shadow: none;
+    background-color: red;
 }

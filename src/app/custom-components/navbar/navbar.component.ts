@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,16 +8,21 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./navbar.component.css'],
   standalone: false
 })
-export class NavbarComponent {
-  constructor(private dialog: MatDialog) {}
+export class NavbarComponent implements OnInit {
+  isLoggedIn: boolean = false; // Track user's login status
 
-  openRegister() {
-    // console.log("open")
-    // this.dialog.open(RegisterModalComponent, {
-    //   width: '80%',
-    //   maxWidth: '400px',
-    //   autoFocus: false,
-    //   disableClose: true,
-    // });
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    // Subscribe to authentication state changes
+    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  }
+
+  // Log out the user
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']); // Redirect to login page
   }
 }

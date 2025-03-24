@@ -18,7 +18,8 @@ import { ProfileComponent } from './custom-components/profile/profile.component'
 import { QuizComponent } from './custom-components/quiz/quiz.component';
 import { McqComponent } from './custom-components/mcq/mcq.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { FooterComponent } from './custom-components/footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ProfileComponent,
     QuizComponent,
     McqComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatDialogModule,
     MatPaginatorModule,
     BrowserAnimationsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
