@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-quiz',
@@ -8,15 +8,40 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } fr
 })
 export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tracker') tracker!: ElementRef;
+  @Input() quizId: number = 1;
 
   currentQuestionIndex: number = 0;
-  timeLeft: number = 30;
   quizCompleted: boolean = false;
+  quizStarted: boolean = false;
   score: number = 0;
   aiExplanation: string = '';
   timerInterval: any;
   userAnswers: string[] = [];
   attemptedQuestions: boolean[] = [];
+  reviewAnswer: boolean = false;
+  results: any[] = [
+    {
+      "question": {
+        "text": "What is the capital of France?",
+        "options": ["London", "Berlin", "Paris", "Madrid"],
+        "correctAnswer": "Paris"
+      },
+      "selected_option": "Paris",
+      "correct_option": "Paris",
+      "is_correct": true
+    },
+    {
+      "question": {
+        "text": "Which planet is known as the Red Planet?",
+        "options": ["Earth", "Mars", "Jupiter", "Venus"],
+        "correctAnswer": "Mars"
+      },
+      "selected_option": "Jupiter",
+      "correct_option": "Mars",
+      "is_correct": false
+    }
+  ]
+;
 
   questions: any[] = [
     {
@@ -60,7 +85,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       correctAnswer: "Carbon Dioxide"
     },
     {
-      text: "Who developed the theory of relativity?",
+      text: "To make the timer component fixed even after scrolling, you need to modify its CSS by changing position: sticky to position: fixed and specifying top and right values to keep it anchored in place.To make the timer component fixed even after scrolling, you need to modify its CSS by changing position: sticky to position: fixed and specifying top and right values to keep it anchored in place.",
       options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking"],
       correctAnswer: "Albert Einstein"
     },
@@ -72,7 +97,6 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   ngOnInit() {
-    this.startTimer();
     this.attemptedQuestions = new Array(this.questions.length).fill(false);
   }
 
@@ -84,18 +108,6 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     this.scrollToCurrentQuestion();
   }
 
-  startTimer() {
-    this.clearTimer();
-    this.timeLeft = 30;
-    this.timerInterval = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
-      } else {
-        this.handleTimeout();
-      }
-    }, 1000);
-  }
-
   handleTimeout() {
     this.clearTimer();
     if (this.currentQuestionIndex < this.questions.length - 1) {
@@ -103,6 +115,10 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.submitQuiz();
     }
+  }
+
+  startQuiz() {
+    this.quizStarted = true;
   }
 
   clearTimer() {
@@ -115,7 +131,6 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.attemptedQuestions[this.currentQuestionIndex] = true;
       this.currentQuestionIndex++;
-      this.startTimer();
       this.scrollToCurrentQuestion();
     }
   }
@@ -123,14 +138,12 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   previousQuestion() {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
-      this.startTimer();
       this.scrollToCurrentQuestion();
     }
   }
 
   goToQuestion(index: number) {
     this.currentQuestionIndex = index;
-    this.startTimer();
     this.scrollToCurrentQuestion();
   }
 
@@ -144,10 +157,6 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submitQuiz() {
     this.quizCompleted = true;
-    this.clearTimer();
-    this.score = this.questions.reduce((acc, question, index) => {
-      return acc + (question.correctAnswer === this.userAnswers[index] ? 1 : 0);
-    }, 0);
   }
 
   askAI() {
@@ -160,7 +169,6 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userAnswers = [];
     this.attemptedQuestions = new Array(this.questions.length).fill(false);
     this.score = 0;
-    this.startTimer();
     this.scrollToCurrentQuestion();
   }
 
@@ -171,4 +179,25 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       itemElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
+
+  nextResultQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+      this.scrollToCurrentQuestion();
+    }
+  }
+
+  previousResultQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+      this.scrollToCurrentQuestion();
+    }
+  }
+
+  reviewAnswerFun() {
+    this.reviewAnswer = true
+    this.currentQuestionIndex = 0;
+    this.scrollToCurrentQuestion();
+  }
+
 }

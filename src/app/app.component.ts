@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'quiz-app-v2';
+  isQuizPage = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event=>{
+      if(event instanceof NavigationEnd) {
+        this.isQuizPage = event.url.includes('/quiz')
+      }
+    })
+  }
 }

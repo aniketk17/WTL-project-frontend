@@ -6,7 +6,7 @@
     align-items: center;
     background: linear-gradient(135deg, #00b4d8, #0077b6);
     padding: 0 20px;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 1000;
 }

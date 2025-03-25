@@ -11,11 +11,23 @@
 
 html, body {
   height: 100%;
-  width: 100%;
-  overflow: hidden;
+  margin: 0;
 }
 
-.scrollable-container {
-  overflow: auto; 
-  height: 100vh;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures full height of the viewport */
 }
+
+.content {
+  flex: 1; /* Pushes the footer to the bottom */
+}
+
+.footer {
+  background-color: #90e0ef;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+

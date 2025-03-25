@@ -20,6 +20,7 @@ import { McqComponent } from './custom-components/mcq/mcq.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './custom-components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TimerComponent } from './custom-components/timer/timer.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProfileComponent,
     QuizComponent,
     McqComponent,
-    FooterComponent
+    FooterComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,

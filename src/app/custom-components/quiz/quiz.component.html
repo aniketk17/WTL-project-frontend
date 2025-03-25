@@ -1,61 +1,91 @@
-<div class="quiz-tracker-container">
-  <div class="question-tracker" #tracker>
-    <div
-      class="question-tracker-item"
-      *ngFor="let question of questions; let i = index"
-      [class.active]="i === currentQuestionIndex"
-      [class.attempted]="isAttempted(i)"
-      (click)="goToQuestion(i)"
-    >
-      {{ i + 1 }}
-      <div class="tracker-line" *ngIf="i < questions.length - 1"></div>
-    </div>
-  </div>
+<div class="quiz-start-container" *ngIf="!quizStarted">
+    <h1>Welcome to the Quiz!</h1>
+    <p class="quiz-description">Test your knowledge and challenge yourself!</p>
+    <button class="start-btn" (click)="startQuiz()">Start Quiz</button>
 </div>
 
-<div class="quiz-container">
-  <div class="timer-container">
-    <span id="timer">Time Left: {{ timeLeft }}</span>
-  </div>
-
-  <div class="mcq-container" *ngIf="!quizCompleted">
-    <div>
-      <p class="question-text">{{ questions[currentQuestionIndex].text }}</p>
-      <div class="options-container">
-        <label class="option-item" *ngFor="let option of questions[currentQuestionIndex].options; let i = index">
-          <input type="radio" name="answer" [value]="option" (change)="onAnswerSelected(option)">
-          <span class="option-number">{{ i + 1 }}.</span>
-          <span class="option-text">{{ option }}</span>
-        </label>
-      </div>
+<div class="main-container" *ngIf="quizStarted">
+    <div class="timer-co-co" *ngIf="!quizCompleted">
+        <div class="timer-comp">
+            <app-timer [totalSeconds]="600"></app-timer>
+        </div>
     </div>
-  </div>
-
-  <div class="nav-buttons" *ngIf="!quizCompleted">
-    <button class="prev-btn" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
-      Previous
-    </button>
-    <button class="mark-btn">
-      Mark Answer
-    </button>
-    <button class="next-btn" *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">
-      Next
-    </button>
-    <button class="submit-btn" *ngIf="currentQuestionIndex === questions.length - 1" (click)="submitQuiz()">
-      Submit
-    </button>
-  </div>
-
-  <div class="ai-section" *ngIf="quizCompleted">
-    <button class="ask-ai-btn" (click)="askAI()">Ask AI</button>
-    <div class="ai-explanation" *ngIf="aiExplanation">
-      <p>{{ aiExplanation }}</p>
+    <div class="quiz-tracker-container">
+        <div class="question-tracker" #tracker>
+            <div class="question-tracker-item" *ngFor="let question of questions; let i = index"
+                [class.active]="i === currentQuestionIndex" [class.attempted]="isAttempted(i)"
+                (click)="goToQuestion(i)">
+                {{ i + 1 }}
+                <div class="tracker-line" *ngIf="i < questions.length - 1"></div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="quiz-end-container" *ngIf="quizCompleted">
-    <h1>Quiz Completed!</h1>
-    <p class="score">Your Score: {{ score }}/{{ questions.length }}</p>
-    <button class="retry-btn" (click)="retryQuiz()">Retry Quiz</button>
-  </div>
+    <div class="quiz-container">
+        <div class="mcq-container" *ngIf="!quizCompleted">
+            <div>
+                <p class="question-text">{{ questions[currentQuestionIndex].text }}</p>
+                <div class="options-container">
+                    <label class="option-item"
+                        *ngFor="let option of questions[currentQuestionIndex].options; let i = index">
+                        <input type="radio" name="answer" [value]="option" (change)="onAnswerSelected(option)">
+                        <span class="option-number">{{ i + 1 }}.</span>
+                        <span class="option-text">{{ option }}</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="mcq-container" *ngIf="reviewAnswer">
+            <div>
+                <p class="question-text">{{ results[currentQuestionIndex].question.text }}</p>
+                <div class="options-container">
+                    <label class="option-item"
+                        *ngFor="let option of results[currentQuestionIndex].question.options; let i = index" [ngClass]="{
+                    'correct-answer': option === results[currentQuestionIndex].correct_option,
+                    'wrong': option === results[currentQuestionIndex].selected_option && option !== results[currentQuestionIndex].correct_option
+                  }">
+                        <input type="radio" name="result-answer" [value]="option"
+                            [checked]="option === results[currentQuestionIndex].selected_option" disabled>
+                        <span class="option-number">{{ i + 1 }}.</span>
+                        <span class="option-text">{{ option }}</span>
+                    </label>
+                </div>
+                <div class="nav-buttons">
+                    <button class="prev-btn" (click)="previousResultQuestion()" [disabled]="currentQuestionIndex === 0">
+                        Previous
+                    </button>
+                    <button class="next-btn" *ngIf="currentQuestionIndex < questions.length - 1"
+                        (click)="nextResultQuestion()">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons" *ngIf="!quizCompleted">
+            <button class="prev-btn" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+                Previous
+            </button>
+            <button class="next-btn" *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()">
+                Next
+            </button>
+            <button class="submit-btn" *ngIf="currentQuestionIndex === questions.length - 1" (click)="submitQuiz()">
+                Submit
+            </button>
+        </div>
+
+        <!-- <div class="ai-section" *ngIf="quizCompleted">
+        <button class="ask-ai-btn" (click)="askAI()">Ask AI</button>
+        <div class="ai-explanation" *ngIf="aiExplanation">
+          <p>{{ aiExplanation }}</p>
+        </div>
+      </div> -->
+
+        <div class="quiz-end-container" *ngIf="quizCompleted && !reviewAnswer">
+            <h1>Quiz Completed!</h1>
+            <p class="score">Your Score: {{ score }}/{{ questions.length }}</p>
+            <button class = "start-btn" (click)="reviewAnswerFun()">Review Answer</button>
+        </div>
+    </div>
 </div>
