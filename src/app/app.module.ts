@@ -21,6 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './custom-components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TimerComponent } from './custom-components/timer/timer.component';
+import { importProvidersFrom } from '@angular/core';
+import { AboutUsComponent } from './custom-components/about-us/about-us.component'; // ✅ Correct Import
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { TimerComponent } from './custom-components/timer/timer.component';
     MatPaginatorModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    AboutUsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
