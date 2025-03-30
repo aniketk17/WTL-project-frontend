@@ -1,16 +1,76 @@
-<section class="services-container">
-    <div class="header-section">
-      <h1 class="title">Our Services</h1>
-      <p class="subtitle">Empowering Your Learning Experience</p>
-    </div>
-  
-    <div class="content-section">
-      <div class="services-grid">
-        <div class="service-card" *ngFor="let service of services">
-          <div class="service-icon">{{service.icon}}</div>
-          <h3 class="service-title">{{service.title}}</h3>
-          <p class="service-description">{{service.description}}</p>
+<div class="services-container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Our Premium Learning Services</h1>
+        <p>Powered by AI to accelerate your knowledge acquisition</p>
+        <div class="stats-grid">
+          <div class="stat-item" *ngFor="let stat of platformStats | keyvalue">
+            <div class="stat-value">{{stat.value}}</div>
+            <div class="stat-label">{{stat.key | titlecase}}</div>
+          </div>
         </div>
       </div>
+    </section>
+  
+    <div class="tabs-container">
+      <button 
+        *ngFor="let tab of ['all', 'popular', 'comingSoon']"
+        [class.active]="activeTab === tab"
+        (click)="setActiveTab(tab)"
+      >
+        {{ tab === 'comingSoon' ? 'Coming Soon' : tab | titlecase }}
+      </button>
     </div>
-  </section>
+  
+    <div class="services-grid">
+      <div 
+        class="service-card"
+        *ngFor="let service of filteredServices; trackBy: trackById"
+        [class.coming-soon]="service.comingSoon"
+      >
+        <div class="service-header">
+          <span class="service-icon">{{service.icon}}</span>
+          <h3>{{service.title}}</h3>
+          <div class="service-badges">
+            <span class="badge popular" *ngIf="service.isPopular">Popular</span>
+            <span class="badge coming-soon" *ngIf="service.comingSoon">Coming Soon</span>
+          </div>
+        </div>
+        <p class="service-description">{{service.description}}</p>
+        
+        <div class="features-list">
+          <h4>Key Features:</h4>
+          <ul>
+            <li *ngFor="let feature of service.features">{{feature}}</li>
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+  
+    <section class="testimonials">
+      <h2>What Our Learners Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" *ngFor="let testimonial of testimonials; trackBy: trackById">
+          <div class="testimonial-header">
+            <span class="avatar">{{testimonial.avatar}}</span>
+            <div class="author-info">
+              <strong>{{testimonial.author}}</strong>
+              <span>{{testimonial.role}}</span>
+            </div>
+            <div class="rating">
+              <span *ngFor="let star of [1,2,3,4,5]">⭐</span>
+            </div>
+          </div>
+          <blockquote>"{{testimonial.quote}}"</blockquote>
+        </div>
+      </div>
+    </section>
+  
+    <section class="cta-section">
+      <h2>Ready to Transform Your Learning Experience?</h2>
+      <p>Join thousands of learners who are achieving their goals with our platform</p>
+      <button class="cta-button">Start Your Free Trial</button>
+    </section>
+  </div>
