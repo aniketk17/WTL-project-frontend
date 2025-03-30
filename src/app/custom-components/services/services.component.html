@@ -1,0 +1,16 @@
+<section class="services-container">
+    <div class="header-section">
+      <h1 class="title">Our Services</h1>
+      <p class="subtitle">Empowering Your Learning Experience</p>
+    </div>
+  
+    <div class="content-section">
+      <div class="services-grid">
+        <div class="service-card" *ngFor="let service of services">
+          <div class="service-icon">{{service.icon}}</div>
+          <h3 class="service-title">{{service.title}}</h3>
+          <p class="service-description">{{service.description}}</p>
+        </div>
+      </div>
+    </div>
+  </section>

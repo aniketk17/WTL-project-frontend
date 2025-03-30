@@ -22,7 +22,8 @@ import { FooterComponent } from './custom-components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TimerComponent } from './custom-components/timer/timer.component';
 import { importProvidersFrom } from '@angular/core';
-import { AboutUsComponent } from './custom-components/about-us/about-us.component'; // ✅ Correct Import
+import { AboutUsComponent } from './custom-components/about-us/about-us.component';
+import { ServicesComponent } from './custom-components/services/services.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AboutUsComponent } from './custom-components/about-us/about-us.componen
     QuizComponent,
     McqComponent,
     FooterComponent,
-    TimerComponent
+    TimerComponent,
+    ServicesComponent
   ],
   imports: [
     BrowserModule,
