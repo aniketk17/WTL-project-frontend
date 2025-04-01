@@ -14,7 +14,7 @@ export class EditProfileComponent {
   tempUser: any = {};
 
   ngOnInit() {
-    this.tempUser = { ...this.user }; // Create a copy to avoid direct changes
+    this.tempUser = { ...this.user };
   }
 
   saveChanges() {

@@ -10,11 +10,13 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent {
   title = 'quiz-app-v2';
   isQuizPage = false;
+  isProfilePage = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event=>{
       if(event instanceof NavigationEnd) {
         this.isQuizPage = event.url.includes('/quiz')
+        this.isProfilePage = event.url.includes('/profile')
       }
     })
   }

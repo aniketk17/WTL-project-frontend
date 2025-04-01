@@ -28,9 +28,9 @@
                 <div class="options-container">
                     <label class="option-item"
                         *ngFor="let option of questions[currentQuestionIndex].options; let i = index">
-                        <input type="radio" name="answer" [value]="option" (change)="onAnswerSelected(option)">
+                        <input type="radio" name="answer" [value]="option" (change)="onAnswerSelected(option)" [checked]="selectedAnswer[currentQuestionIndex] === option">
                         <span class="option-number">{{ i + 1 }}.</span>
-                        <span class="option-text">{{ option }}</span>
+                        <span class="option-text">{{ option.option_text }}</span>
                     </label>
                 </div>
             </div>
@@ -41,10 +41,11 @@
                 <p class="question-text">{{ results[currentQuestionIndex].question.text }}</p>
                 <div class="options-container">
                     <label class="option-item"
-                        *ngFor="let option of results[currentQuestionIndex].question.options; let i = index" [ngClass]="{
-                    'correct-answer': option === results[currentQuestionIndex].correct_option,
-                    'wrong': option === results[currentQuestionIndex].selected_option && option !== results[currentQuestionIndex].correct_option
-                  }">
+                        *ngFor="let option of results[currentQuestionIndex].question.options; let i = index" 
+                        [ngClass]="{
+                            'correct-answer': option === results[currentQuestionIndex].question.correctAnswer,
+                            'wrong': option === results[currentQuestionIndex].selected_option && option !== results[currentQuestionIndex].question.correctAnswer
+                        }">
                         <input type="radio" name="result-answer" [value]="option"
                             [checked]="option === results[currentQuestionIndex].selected_option" disabled>
                         <span class="option-number">{{ i + 1 }}.</span>
@@ -55,12 +56,13 @@
                     <button class="prev-btn" (click)="previousResultQuestion()" [disabled]="currentQuestionIndex === 0">
                         Previous
                     </button>
-                    <button class="next-btn" *ngIf="currentQuestionIndex < questions.length - 1"
+                    <button class="next-btn" *ngIf="currentQuestionIndex < results.length - 1"
                         (click)="nextResultQuestion()">
                         Next
                     </button>
                 </div>
             </div>
+            
         </div>
 
         <div class="nav-buttons" *ngIf="!quizCompleted">

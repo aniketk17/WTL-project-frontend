@@ -1,0 +1,22 @@
+<section class="about-container">
+    <div class="header-section">
+      <h1 class="title">About QuizzyMind</h1>
+      <p class="subtitle">Your Smart Learning Companion</p>
+    </div>
+  
+    <div class="content-section">
+      <p class="description">
+        QuizGenius is an innovative learning platform that combines AI technology with adaptive quiz generation 
+        to help you master various domains. Our intelligent system creates personalized quizzes, provides 
+        detailed explanations for both correct and incorrect answers, and helps you track your learning progress.
+      </p>
+  
+      <div class="features-grid">
+        <div class="feature-card" *ngFor="let feature of features">
+          <div class="feature-icon">{{feature.icon}}</div>
+          <h3 class="feature-title">{{feature.title}}</h3>
+          <p class="feature-description">{{feature.description}}</p>
+        </div>
+      </div>
+    </div>
+</section>

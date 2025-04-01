@@ -1,0 +1,43 @@
+<div class="contact-container">
+    <div class="header">
+      <h1>Contact Our Team</h1>
+      <p>Have questions or want to work with us? Reach out to our development team directly.</p>
+    </div>
+  
+    <div class="content">
+      <div class="developers-section">
+        <h2>Meet Our Developers</h2>
+        <div class="developers-grid">
+          <div class="developer-card" *ngFor="let dev of developers">
+            <div class="developer-header">
+              <img src="profile_pic.jpg" class="avatar">
+              <div class="developer-info">
+                <h3>{{dev.name}}</h3>
+                <p class="role">{{dev.role}}</p>
+              </div>
+            </div>
+            <div class="developer-body">
+              <p class="bio">{{dev.bio}}</p>
+              <div class="skills">
+                <span class="skill-tag" *ngFor="let skill of dev.skills">{{skill}}</span>
+              </div>
+            </div>
+            <div class="developer-footer">
+              <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> {{dev.email}}</p>
+                <p><i class="fas fa-phone"></i> {{dev.phone}}</p>
+              </div>
+              <div class="social-links" *ngIf="dev.github || dev.linkedin">
+                <a *ngIf="dev.github" [href]="dev.github" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-github"></i>
+                </a>
+                <a *ngIf="dev.linkedin" [href]="dev.linkedin" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

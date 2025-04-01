@@ -21,6 +21,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './custom-components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TimerComponent } from './custom-components/timer/timer.component';
+import { ProfileFormComponent } from './custom-components/profile-form/profile-form.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ServicesComponent } from './custom-components/services/services.component';
+import { ContactComponent } from './custom-components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,10 @@ import { TimerComponent } from './custom-components/timer/timer.component';
     QuizComponent,
     McqComponent,
     FooterComponent,
-    TimerComponent
+    TimerComponent,
+    ProfileFormComponent,
+    ServicesComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,13 @@ import { TimerComponent } from './custom-components/timer/timer.component';
     FontAwesomeModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

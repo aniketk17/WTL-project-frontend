@@ -13,30 +13,61 @@ import { AuthService } from '../../services/auth.service';
 export class HomeComponent {
   signUp: boolean = true;
   allCategories = [
-    { title: 'Science', info: 'Explore quizzes on physics, chemistry, biology, and more.' },
-    { title: 'Mathematics', info: 'Challenge yourself with quizzes on algebra, calculus, and geometry.' },
-    { title: 'History', info: 'Test your knowledge of ancient civilizations, world wars, and historical events.' },
-    { title: 'Geography', info: 'Quizzes on countries, capitals, mountains, and rivers of the world.' },
-    { title: 'Technology', info: 'Stay sharp with quizzes on programming, AI, and latest tech trends.' },
-    { title: 'Sports', info: 'From football to Formula 1—test your sports trivia skills!' },
-    { title: 'Literature', info: 'Quizzes about famous authors, books, and literary movements.' },
-    { title: 'Movies & TV', info: 'Guess the movies, actors, and iconic TV shows from around the world.' },
-    { title: 'Music', info: 'How well do you know global music hits, bands, and genres?' },
-    { title: 'Art & Design', info: 'Questions on famous paintings, artists, and design concepts.' },
-    { title: 'General Knowledge', info: 'Test your overall knowledge with mixed-topic quizzes.' },
-    { title: 'Business & Economics', info: 'From startups to stock markets—explore business trivia.' },
-    { title: 'Health & Fitness', info: 'Learn and test knowledge about health tips, workouts, and nutrition.' },
-    { title: 'Mythology', info: 'Dive into the myths and legends from different cultures.' },
-    { title: 'Food & Cooking', info: 'Tasty trivia on world cuisines, chefs, and cooking techniques.' },
-    { title: 'Travel', info: 'Trivia on famous landmarks, travel tips, and tourist hotspots.' },
-    { title: 'Politics', info: 'Quizzes on global leaders, policies, and political history.' },
-    { title: 'Language & Grammar', info: 'Test your grammar skills and language knowledge.' },
-    { title: 'Comics & Animation', info: 'From Marvel to Manga—quizzes for comic and animation fans.' },
-    { title: 'Environment', info: 'Learn about climate change, sustainability, and the environment.' },
-    { title: 'Psychology', info: 'Explore quizzes on human behavior, mental health, and theories.' },
-    { title: 'Astronomy', info: 'Test your knowledge of stars, planets, galaxies, and the universe.' },
-    { title: 'Fashion', info: 'Questions about fashion trends, designers, and iconic styles.' },
-    { title: 'Current Affairs', info: 'Stay updated with quizzes on recent global events and news.' },
+    {
+      "id": 1,
+      "category": {
+        "id": 2,
+        "name": "health"
+      },
+      "title": "Heart end meeting live trial sure success.",
+      "description": "Reduce support customer yourself. Address than spring let.",
+      "created_at": "2025-03-20T09:47:35.315718Z",
+      "updated_at": "2025-03-20T09:47:35.315769Z"
+    },
+    {
+      "id": 2,
+      "category": {
+        "id": 2,
+        "name": "health"
+      },
+      "title": "Fish girl politics author kitchen upon effect.",
+      "description": "Full simply sense see either do. Drug this west live.",
+      "created_at": "2025-03-20T09:47:35.317835Z",
+      "updated_at": "2025-03-20T09:47:35.317856Z"
+    },
+    {
+      "id": 3,
+      "category": {
+        "id": 2,
+        "name": "health"
+      },
+      "title": "Success economic wonder sea result compare dinner.",
+      "description": "Growth cover firm maybe. Game identify professor world three serious. The every half.",
+      "created_at": "2025-03-20T09:47:35.319668Z",
+      "updated_at": "2025-03-20T09:47:35.319690Z"
+    },
+    {
+      "id": 4,
+      "category": {
+        "id": 3,
+        "name": "officer"
+      },
+      "title": "Thus agreement without certainly southern key.",
+      "description": "Exist nearly crime although animal resource. Former free single better. Financial investment across build able.",
+      "created_at": "2025-03-20T09:47:35.321346Z",
+      "updated_at": "2025-03-20T09:47:35.321366Z"
+    },
+    {
+      "id": 5,
+      "category": {
+        "id": 3,
+        "name": "officer"
+      },
+      "title": "Treatment whether perform opportunity.",
+      "description": "Until seek source later return it. Rest watch present environment. Woman but again local direction about.",
+      "created_at": "2025-03-20T09:47:35.322952Z",
+      "updated_at": "2025-03-20T09:47:35.322970Z"
+    }
   ];
   paginatedCategories: any = [];
   pageSize: number = 12;
@@ -44,21 +75,46 @@ export class HomeComponent {
   searchQuery: string = '';
   selectedFilter: string = 'all';
   isDarkMode: boolean = false;
-  isLoggedIn: boolean = false; // Track user's login status
-  showQuizzesSection: boolean = false; // Control visibility of quizzes section
+  isLoggedIn: boolean = false;
+  categoryNames: any = [];
+
+  showQuizzesSection: boolean = false;
   @ViewChild('quizSection', { static: false }) quizSection!: ElementRef;
   constructor(private router: Router, private authService: AuthService) {
-  } 
+  }
 
   ngOnInit() {
-    this.updatePaginatedCategories();
-    this.addScrollAnimation();
+    this.fetchAllQuizzes();
     this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
     });
+
+    setTimeout(() => {
+      this.addScrollAnimation();
+    }, 100); // Small delay to allow data rendering
   }
 
-  
+
+  fetchAllQuizzes() {
+    this.authService.getAllQuiz().subscribe(
+      (categories) => {
+        this.allCategories = categories;
+        console.log(this.allCategories[0]);
+
+        // Set category names after categories are fetched
+        this.categoryNames = new Set(this.allCategories.map(category => category.category.name));
+        console.log(this.categoryNames);
+
+        this.updatePaginatedCategories();
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+
+
+
   redirectToLogin(): void {
     this.router.navigate(['/login']);
   }
@@ -76,24 +132,29 @@ export class HomeComponent {
   updatePaginatedCategories() {
     let filteredCategories = this.allCategories;
 
-    // Filter by search query
+    // Filter by search query (case-insensitive)
     if (this.searchQuery) {
+      console.log("search-query:", this.searchQuery)
+      const searchLower = this.searchQuery.toLowerCase();
       filteredCategories = filteredCategories.filter(category =>
-        category.title.toLowerCase().includes(this.searchQuery)
+        category.title.toLowerCase().includes(searchLower)
       );
     }
 
-    // Filter by selected filter
+    // Filter by selected filter (category name instead of title)
     if (this.selectedFilter !== 'all') {
       filteredCategories = filteredCategories.filter(category =>
-        category.title === this.selectedFilter
+        category.category.name === this.selectedFilter
       );
     }
 
+    // Apply pagination
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedCategories = filteredCategories.slice(startIndex, endIndex);
+    console.log(this.paginatedCategories);
   }
+
 
   onPageChange(event: PageEvent) {
     this.currentPage = event.pageIndex;
@@ -119,7 +180,7 @@ export class HomeComponent {
   }
 
   getTimeLeft(category: any): string {
-  
+
     const minutes = Math.floor(Math.random() * 60);
     const seconds = Math.floor(Math.random() * 60);
     return `${minutes}m ${seconds}s`;
@@ -139,6 +200,7 @@ export class HomeComponent {
   }
 
   startQuiz(category: any) {
-    this.router.navigate(['/quiz'], { queryParams: { category: category.title } });
+    const quizId = category.id;
+    this.router.navigate(['/quiz', quizId])
   }
 }

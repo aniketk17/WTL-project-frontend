@@ -19,13 +19,12 @@
 }
 
 .custom-card {
-    width: 18px;
-    border: 2px solid #efe5e5;
+    background: #ffffff;
+    border-radius: 10px;
     border-radius: 10px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
     padding: 10px;
     margin: 15px;
-    background: #ffffff;
     height: 160px;
     position: relative;
 }

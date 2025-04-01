@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faUser, faLock, faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'; // Import Google icon
-import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService, // Inject ApiService
+    private authService: AuthService, // Inject ApiService
     private router: Router // Inject Router
   ) {}
 
@@ -61,14 +61,14 @@ export class RegisterComponent implements OnInit {
         password: this.registerForm.value.password,
       };
 
-      // Call the register method from ApiService
-      this.apiService.register(user).subscribe(
+      this.authService.register(user).subscribe(
         (response) => {
           this.message = 'Registration successful!';
-          this.router.navigate(['/login']); // Redirect to login page
+          this.router.navigate(['/login']);
         },
         (error) => {
           this.message = 'Registration failed. Please try again.';
+          alert('Login failed! ' + (error.error?.message || 'Registration failed. Please try again.'));
           console.error('Registration error:', error);
         }
       );
@@ -77,12 +77,10 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  // Toggle password visibility
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-  // Toggle confirm password visibility
   toggleConfirmPasswordVisibility() {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }

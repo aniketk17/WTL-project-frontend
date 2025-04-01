@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-quiz',
@@ -8,7 +10,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, Inp
 })
 export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tracker') tracker!: ElementRef;
-  @Input() quizId: number = 1;
+  quizId: number = 1;
 
   currentQuestionIndex: number = 0;
   quizCompleted: boolean = false;
@@ -16,9 +18,10 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   score: number = 0;
   aiExplanation: string = '';
   timerInterval: any;
-  userAnswers: string[] = [];
+  userAnswers: any = [];
   attemptedQuestions: boolean[] = [];
   reviewAnswer: boolean = false;
+  selectedAnswer: any = [];
   results: any[] = [
     {
       "question": {
@@ -41,7 +44,7 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
       "is_correct": false
     }
   ]
-;
+    ;
 
   questions: any[] = [
     {
@@ -96,8 +99,12 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
 
+  constructor(private route: ActivatedRoute, private authService: AuthService) {
+  }
+
   ngOnInit() {
-    this.attemptedQuestions = new Array(this.questions.length).fill(false);
+    this.quizId = Number(this.route.snapshot.paramMap.get('id'))
+    console.log('quiz id:', this.quizId);
   }
 
   ngOnDestroy() {
@@ -118,7 +125,15 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   startQuiz() {
-    this.quizStarted = true;
+    this.authService.startQuiz(this.quizId).subscribe({
+      next: (response) => {
+        this.questions = response.questions;
+        this.quizStarted = true;
+        this.attemptedQuestions = new Array(this.questions.length).fill(false);
+        this.selectedAnswer = new Array(this.questions.length);
+      },
+      error: (error) => console.error('Error fetching quiz questions:', error)
+    });
   }
 
   clearTimer() {
@@ -147,17 +162,43 @@ export class QuizComponent implements OnInit, OnDestroy, AfterViewInit {
     this.scrollToCurrentQuestion();
   }
 
-  onAnswerSelected(answer: string) {
-    this.userAnswers[this.currentQuestionIndex] = answer;
+  onAnswerSelected(option: any) {
+    const questionId = this.questions[this.currentQuestionIndex].id;
+    console.log(option)
+    if (option) {
+      const selectedOption = option.option_id
+      this.attemptedQuestions[this.currentQuestionIndex] = true;
+      this.userAnswers[this.currentQuestionIndex] = {
+        question_id: questionId,
+        selected_option_id: selectedOption
+      };
+      this.selectedAnswer[this.currentQuestionIndex] = option
+    }
   }
+
 
   isAttempted(index: number): boolean {
     return this.attemptedQuestions[index];
   }
 
   submitQuiz() {
-    this.quizCompleted = true;
+    const submissionData = {
+      quiz_id: this.quizId,
+      answers: this.userAnswers
+    };
+  
+    this.authService.submitQuiz(submissionData).subscribe({
+      next: (response) => {
+        this.quizCompleted = true;
+        this.results = response.submitted_answers;
+        this.score = response.total_score;
+      },
+      error: (error) => {
+        alert('Login failed! ' + (error.error?.message || 'Quiz Submission Failed. Please try again later'));
+      }
+    });
   }
+  
 
   askAI() {
     this.aiExplanation = "Explanation for current question...";

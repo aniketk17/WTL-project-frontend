@@ -4,14 +4,10 @@
             <app-typewriter></app-typewriter>
             <p>Test your knowledge with our exciting quizzes. Challenge yourself and learn new things every day!</p>
             <div class="cta-buttons">
-                <!-- Show "Get Started" if the user is not logged in -->
                 <button *ngIf="!isLoggedIn" class="button" id="get-started-btn" (click)="redirectToLogin()">Get Started</button>
-    
-                <!-- Show "Explore Quizzes" if the user is logged in -->
                 <button *ngIf="isLoggedIn" class="button" id="explore-quizzes-btn" (click)="showQuizzes()">Explore Quizzes</button>
             </div>
     
-            <!-- Stats and Testimonials -->
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-number">10,000+</span>
@@ -43,7 +39,6 @@
         </div>
     </div>
     
-    <!-- Quiz Templates Section -->
     <div class="scrollable-container" id="quiz-section" #quizSection *ngIf="showQuizzesSection">
         <div class="home">
             <div class="header">
@@ -54,17 +49,17 @@
                 <input type="text" placeholder="Search quizzes..." class="search-input" (input)="onSearch($event)">
                 <select class="filter-select" (change)="onFilterChange($event)">
                     <option value="all">All Categories</option>
-                    <option *ngFor="let category of allCategories" [value]="category.title">{{ category.title }}</option>
+                    <option *ngFor="let category of categoryNames" [value]="category">{{ category }}</option>
                 </select>
             </div>
             <div class="quiz-card-container">
                 <div *ngFor="let category of paginatedCategories" class="quiz-card">
-                    <h3>{{ category.title }}</h3>
-                    <p>{{ category.info }}</p>
+                    <h3>{{ category.category.name }}</h3>
+                    <p>{{ category.title }}</p>
                     <div class="progress-bar">
-                        <div class="progress" [style.width]="getProgress(category) + '%'"></div>
+                        <div class="progress" [style.width]="   getProgress(category) + '%'"></div>
                     </div>
-                    <button class="button" (click)="startQuiz(category)">Start Quiz</button>
+                    <button class="start-quiz-button" (click)="startQuiz(category)">Start Quiz</button>
                 </div>
             </div>
             <mat-paginator [length]="allCategories.length" [pageSize]="6" [pageSizeOptions]="[6,12,18]" showFirstLastButtons

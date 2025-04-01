@@ -11,23 +11,7 @@
 
 html, body {
   height: 100%;
-  margin: 0;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensures full height of the viewport */
-}
-
-.content {
-  flex: 1; /* Pushes the footer to the bottom */
-}
-
-.footer {
-  background-color: #90e0ef;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+  width: 100%;
+  overflow: auto;
 }
 

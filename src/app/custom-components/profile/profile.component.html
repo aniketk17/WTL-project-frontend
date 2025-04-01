@@ -1,51 +1,40 @@
 <div class="main-container">
     <div class="left-container">
         <div class="brief-info">
-            <img src="profile_pic.jpg" alt="Profile Image" class="profile-image">
-            <h3>{{ user.name }}</h3>
-            <p>{{ user.role }}</p>
-            <p>{{ user.location }}</p>
-            <div class="button-group">
-                <button class="btn btn-primary" (click)="toggleFollow()">
-                    {{ isFollowing ? 'Unfollow' : 'Follow' }}
-                </button>
-                <button class="btn btn-outline-success" (click)="openMessageBox()">
-                    Message
-                </button>
-            </div>
+            <img src="profile_pic.jpg" alt="" class="profile-image" style="margin: 0;">
+            <h3 style="margin: 0;">{{ user.username }}</h3>
+            <p style="margin: 0;">{{ user.bio }}</p>
+            <p style="margin: 0;">
+                📍 {{ user.address }}
+              </p>
         </div>
     </div>
-
     <div class="right-side">
         <div class="right-container">
             <div class="info-row">
                 <p class="label-p">Full Name</p>
-                <p *ngIf="!isEditing">{{ user.name }}</p>
+                <p>{{ user.name }}</p>
             </div>
             <div class="info-row">
                 <p class="label-p">Email</p>
-                <p *ngIf="!isEditing">{{ user.email }}</p>
+                <p>{{ user.email }}</p>
             </div>
             <div class="info-row">
                 <p class="label-p">Phone</p>
-                <p *ngIf="!isEditing">{{ user.phone }}</p>
+                <p>{{ user.phone }}</p>
             </div>
             <div class="info-row">
                 <p class="label-p">College</p>
-                <p *ngIf="!isEditing">{{ user.college }}</p>
+                <p>{{ user.college }}</p>
             </div>
             <div class="info-row">
                 <p class="label-p">Address</p>
-                <p *ngIf="!isEditing">{{ user.location }}</p>
+                <p>{{ user.address }}</p>
             </div>
-            <div class="edit-buttons">
-                <button class="btn btn-outline-primary" (click)="toggleEdit()">
-                    {{ isEditing ? 'Cancel' : 'Edit' }}
-                </button>
-                <button *ngIf="isEditing" class="btn btn-success" (click)="saveChanges()">Save</button>
+            <div>
+                <button class="btn btn-outline-primary edit-button" (click)="toggleEdit()">Edit</button>
             </div>
         </div>
-
         <div class="performance-container">
             <h3>User Performance Overview</h3>
             <div class="performance-metrics">
@@ -65,31 +54,7 @@
                     <h4>Highest Score</h4>
                     <p>{{ performance.highestScore }}</p>
                 </div>
-                <div class="metric-card">
-                    <h4>Fastest Completion</h4>
-                    <p>{{ performance.fastestCompletion }}</p>
-                </div>
             </div>
-        </div>
-
-        <div class="leaderboard-container">
-            <h3>Leaderboard</h3>
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let user of leaderboard">
-                        <td>{{ user.rank }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.score }}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
